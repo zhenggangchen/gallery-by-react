@@ -1,4 +1,24 @@
-没有Gruntfile.js不是安装错误，而是generator-react-webpack V2.0 移除了Grunt（webpack替代）。可以执行 npm start 或者
+  没有Gruntfile.js不是安装错误，而是generator-react-webpack V2.0 移除了Grunt（webpack替代）。可以执行 npm start 或者
 npm run serve 启动服务。
-现在安装的没有gruntfile.js，而且webpack.config.js和webpack.dist.config.js中好多东西都扔到了cfg中，老师讲的这个loader的配置在cfg/default.js中
-（下）最新版本 grunt serve:dist 命令代替 ~ npm run serve:dist。大家可以看package.json 文件中的scripts 对应的命令前加npm run 即可执行
+  现在安装的没有gruntfile.js，而且webpack.config.js和webpack.dist.config.js中好多东西都扔到了cfg中，老师讲的这个loader的配置在cfg/default.js中
+ （下）最新版本 grunt serve:dist 命令代替  npm run serve:dist。大家可以看package.json 文件中的scripts 对应的命令前加npm run 即可执行
+ 
+ 
+ 
+  发布到github的坑，并且通过静态页面浏览，服务器端和自己的电脑的文件路径是不同！！
+  把dist发布上去就能通过静态页面浏览，
+  dist 全称是distribution。 
+ 在某些框架中，因为开发和发布是的内容或者代码形式是不一样的（比如利用Grunt压缩等等)，这时候就需要一个存放最终发布版本的代码，这就是dist文件夹的用处。
+ 是最终放到服务器上的发布版本。如果是放到开源去，一般放开发版，而不是发布版的，因为发布版通常是全部压缩优化过，不利于开源开发。
+ 
+ 1.成功发布到gh-pages,打开gh-pages的预览地址，发现app.js文件找不到404了。
+ 解决方法： - 修改default.js中的publicPath:'/assets/' 为：publicPath:'assets/'.
+ 和
+ 
+ - 修改src文件夹中index.html中的
+        <script type="text/javascript" src="/assets/app.js"></script>`
+   为：`<script type="text/javascript" src="assets/app.js"></script>` 
+
+ 
+ 
+ 
