@@ -54,14 +54,15 @@ let ImgFigure = React.createClass({
     //如果图片的旋转角度有值并且不为0，添加旋转角度
     if (this.props.arrange.rotate) {
       //不用前缀也行
+      //前缀错了应为(['MozTransform','msTransform','WebkitTransform','transform']),可以不用transform了
       /*(['-moz-','-ms-','-webkit-','']).forEach(function (value) {
        styleObject[value+'transform']='rotate('+this.props.arrange.rotate+'deg)';
        }.bind(this))*/
       styleObject['transform'] = 'rotate(' + this.props.arrange.rotate + 'deg)';
     }
 
-    if(this.props.arrange.isCenter){
-      styleObject.zIndex=11;
+    if (this.props.arrange.isCenter) {
+      styleObject.zIndex = 11;
     }
 
     let imgFigureClassName = 'img-figure';
@@ -84,6 +85,37 @@ let ImgFigure = React.createClass({
         </figcaption>
       </figure>
     );
+  }
+});
+
+//控制组件
+let ControllerUnit = React.createClass({
+  handleClick(e){
+
+    //如果点击的是当前正在选中态的按钮，则翻转图片，否则将对应的图片居中
+    if (this.props.arrange.isCenter) {
+      this.props.inverse();
+    } else {
+      this.props.center();
+    }
+
+    e.stopPropagation();
+    e.preventDefault();
+  },
+  render(){
+    let controllerUnitClassName = "controller-unit";
+    //如果对应的是居中的图片，显示控制按钮的居中态
+    if (this.props.arrange.isCenter) {
+      controllerUnitClassName += " is-center";
+      //如果同时对应的是翻转的图片，显示控制按钮的翻转态
+      if (this.props.arrange.isInverse) {
+        controllerUnitClassName += " is-inverse";
+      }
+    }
+    return (
+      <span className={controllerUnitClassName} onClick={this.handleClick}></span>
+    );
+
   }
 });
 
@@ -197,10 +229,10 @@ class AppComponent extends React.Component {
         pos: {
           top: getRangeRandom(vPosRangTopY[0], vPosRangTopY[1]),
           left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
-          },
+        },
         rotate: get30DegRandom(),
-        isCenter:false
-        }
+        isCenter: false
+      }
     });
 
     //布局左右两侧的图片
@@ -221,7 +253,7 @@ class AppComponent extends React.Component {
         isCenter: false
       }
     }
-
+    debugger;
 
     if (imgsArrangeTopArr && imgsArrangeTopArr[0]) {
       imgsArrangeArr.splice(topImageSpliceIndex, 0, imgsArrangeTopArr[0]);
@@ -322,6 +354,9 @@ class AppComponent extends React.Component {
                                  arrange={this.state.imgsArrangeArr[index]}
                                  inverse={this.inverse(index)}
                                  center={this.center(index)}/>);
+      controllerUnits.push(<ControllerUnit key={index} arrange={this.state.imgsArrangeArr[index]}
+                                           inverse={this.inverse(index)}
+                                           center={this.center(index)}/>);
     }.bind(this));
 
     return (
