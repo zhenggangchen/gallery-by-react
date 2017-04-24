@@ -1,4 +1,0 @@
-没有Gruntfile.js不是安装错误，而是generator-react-webpack V2.0 移除了Grunt（webpack替代）。可以执行 npm start 或者
-npm run serve 启动服务。
-现在安装的没有gruntfile.js，而且webpack.config.js和webpack.dist.config.js中好多东西都扔到了cfg中，老师讲的这个loader的配置在cfg/default.js中
-（下）最新版本 grunt serve:dist 命令代替 ~ npm run serve:dist。大家可以看package.json 文件中的scripts 对应的命令前加npm run 即可执行
